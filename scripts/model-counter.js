@@ -19,15 +19,19 @@ function Counter(element) {
     function alterCount(difference) {
         // TODO counter: adapt counter and update counter in overview.html
         count = count + difference;
+        updateCount();
+    }
+
+    function updateCount() {
+        element.html(count);
     }
 
     /*
      * Get the number of added elements
      */
-    function getCount(difference) {
+    function getCount() {
         return count;
     }
-
 
     // Export methods
     this.alterCount = alterCount;

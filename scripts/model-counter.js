@@ -21,6 +21,7 @@ function Counter(element) {
         count = count + difference;
     }
 
+    /*
      * Get the number of added elements
      */
     function getCount(difference) {

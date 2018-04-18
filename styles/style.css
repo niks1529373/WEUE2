@@ -410,9 +410,32 @@ form:invalid .button, .button:disabled {
         width: 100%;
         max-width: 749px;
     }
+
+    .details {
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        background-color: white;
+        width: 100%;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .details > div {
+        margin-bottom: 0.3em;
+    }
+
+    .device-element {
+       visibility: hidden
+    }
+
 }
 
 @media (min-width: 768px) {
+
+    .device-list-element {
+       visibility: hidden
+    }
+
     .elements {
         display: block;
         padding-bottom: 12px;

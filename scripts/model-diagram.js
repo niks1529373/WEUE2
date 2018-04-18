@@ -41,7 +41,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
 
 
     // TODO diagram: add variables for drawing mode and to store selected devices and arrows
-
+    this.count = 0;
 
     // Initialize events
     attachEventHandlers();
@@ -122,6 +122,59 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
          *                 + add device to Controls
          *                 + adapt device counter of controls
          */
+
+
+        if ($(ui.helper).hasClass('device-image')) {      // TODO check if completely inside the diagram      
+            this.count = this.count + 1;
+            var relX = ui.helper.offset().top - this.area.offset().top;
+            var relY = ui.helper.offset().left - this.area.offset().left;
+            var type = $(ui.helper.context).attr('data-device-type');
+            var title = type + ' ' + this.count;
+ 
+            //create diagram element
+            var element = $('<div class="device-element"></div>');
+            element.width("100px");
+ 
+            var imgDiagram = $(images[type]);
+            imgDiagram.width("100px");
+
+            element.append(imgDiagram);
+            $(element[0]).css({ 'top' :  relX + 'px', 'left' : relY + 'px', 'position':'absolute'});
+            element.draggable({ containment: "#diagram" });
+            this.area.prepend(element);
+
+            // create device list element
+            var imgList = $(images[type]);
+            imgList.width("60px");
+            var device = ''+
+            '<li class="device device-list-element">'+
+            '<div class="device-image device-list-picture"> '+
+            imgList.prop("outerHTML") +
+            '</div>'+
+            '<dl class="device-properties">'+
+            '   <dt class="accessibility">Maschinentyp</dt>' +
+            '   <dd id="type-machine" class="device-type">'+type+' '+this.count+'</dd>' +
+
+            '   <dt class="accessibility">Vorgänger</dt>' +
+            '   <dd name="predecessor">Vorgänger:</dd>' +
+
+            '   <dt class="accessibility">Nachvolger</dt>' +
+            '   <dd name="successor">Nachvolger:</dd>' +
+            '</dl>'+
+            '</li>';
+            $('.devices.device-list').append(device);
+
+            // adjust counter
+            devicesCounter.alterCount(1);
+
+            //TODO check where the appeding to the diagram should happen (inside this function or Device constructor?)
+            //new Device TODO: What is the max, min value ?
+            var device = new Device(this, this.count, [relX, relY], title, type, 0, 0, images[type], update[type]);
+
+            controls.addDevice(device);
+        }
+        
+
     }
 
     /**
@@ -199,4 +252,5 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     this.showContextMenu = showContextMenu;
     this.deviceMouseDown = deviceMouseDown;
     this.deviceMouseUp = deviceMouseUp;
+    this.addDevice = addDevice;
 }

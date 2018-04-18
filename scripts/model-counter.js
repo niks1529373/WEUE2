@@ -18,8 +18,18 @@ function Counter(element) {
      */
     function alterCount(difference) {
         // TODO counter: adapt counter and update counter in overview.html
+        count = count + difference;
     }
+
+     * Get the number of added elements
+     */
+    function getCount(difference) {
+        return count;
+    }
+
 
     // Export methods
     this.alterCount = alterCount;
+    this.getCount = getCount;
+
 }

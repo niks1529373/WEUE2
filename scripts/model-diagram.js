@@ -51,10 +51,15 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function attachEventHandlers() {
         // TODO diagram: prevent standard context menu inside of diagram
-
+        
         // TODO diagram: attach mouse move event and draw arrow if arrow active mode is on
 
         // TODO diagram: add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
+        $('#diagram').droppable({
+            drop: function(event, ui) {
+                _this.addDevice(event, ui);
+            }
+        });
 
         // TODO diagram: attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
 
@@ -130,7 +135,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var relY = ui.helper.offset().left - _this.area.offset().left;
             var type = $(ui.helper.context).attr('data-device-type');
             var title = type + ' ' + _this.count;
-            
+
             //new Device TODO: What is the max, min value ?
             var device = new Device(_this, _this.count, [relX, relY], title, type, 0, 0, images[type], update[type]);
 

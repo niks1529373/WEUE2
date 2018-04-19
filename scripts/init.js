@@ -16,10 +16,4 @@ $(document).ready(function() {
             return $(this).children('.device-image').clone().css('z-index', 1);
     	}
 	});
-
-    $('#diagram').droppable({
-        drop: function(event, ui) {
-            diagram.addDevice(event, ui);
-        }
-    });
 });

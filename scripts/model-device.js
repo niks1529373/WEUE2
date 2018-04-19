@@ -118,10 +118,17 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         });
 
         // TODO device: attach events for functionality like in assignment-document described
-        object.mousedown(function(ev){
+        object.mousedown(function(ev) {
             diagram.deviceMouseDown(_this)
             $(".contextMenu").css("display", "none");
             ev.stopPropagation();
+        });
+
+        // Hover for arrow
+        object.hover(function() {
+            object.append($("#arrow-device-add-reference").clone(false));
+        }, function() {
+            object.find("#arrow-device-add-reference").remove();
         });
 
         // TODO device: attach drag & drop functionality

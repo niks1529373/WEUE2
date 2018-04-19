@@ -64,18 +64,44 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     const object = $(
         // TODO device: create html container
+        "<div class='device-element'></div>"
     );
 
-    // TODO device: add variables if necessary
+    (function() {           // wrapped in function to prevent imgList and deviceListElement to have global scope
+        // TODO device: add variables if necessary
+        object.width("100px");
+        object.append(image);
 
+        // TODO device: append the device DOM object to the diagram area
+        diagram.area.prepend(object);
 
-    // TODO device: append the device DOM object to the diagram area
+        // TODO device: initialize the device position
+        $(object[0]).css({ 'top' :  position[0] + 'px', 'left' : position[1] + 'px', 'position':'absolute'});
 
+        // create device list element
+        var imgList = $(image);
+        imgList.width("60px");
+        var deviceListElement = '' +
+            '<li class="device device-list-element">' +
+            '<div class="device-image device-list-picture"> ' +
+            imgList.prop("outerHTML") +
+            '</div>' +
+            '<dl class="device-properties">' +
+            '   <dt class="accessibility">Maschinentyp</dt>' +
+            '   <dd id="type-machine" class="device-type">' + type + ' ' + _this.index + '</dd>' +
 
-    // TODO device: initialize the device position
+            '   <dt class="accessibility">Vorgänger</dt>' +
+            '   <dd name="predecessor">Vorgänger:</dd>' +
 
-    // Initialize the event handlers
-    attachEventHandlers();
+            '   <dt class="accessibility">Nachvolger</dt>' +
+            '   <dd name="successor">Nachvolger:</dd>' +
+            '</dl>' +
+            '</li>';
+        $('.devices.device-list').append(deviceListElement);
+
+        // Initialize the event handlers
+        attachEventHandlers();
+    })();
 
     /**
      * Add the event handlers for the diagram
@@ -86,6 +112,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // TODO device: attach events for functionality like in assignment-document described
 
         // TODO device: attach drag & drop functionality
+        object.draggable({ containment: "#diagram" });
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
     }

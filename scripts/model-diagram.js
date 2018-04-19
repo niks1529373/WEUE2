@@ -43,6 +43,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     // TODO diagram: add variables for drawing mode and to store selected devices and arrows
     this.count = 0;
 
+    this.selectedDevice = null;
+
     // Initialize events
     attachEventHandlers();
 
@@ -51,17 +53,26 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function attachEventHandlers() {
         // TODO diagram: prevent standard context menu inside of diagram
-        
+        _this.area.contextmenu(function() {
+            return false;
+        });
+
         // TODO diagram: attach mouse move event and draw arrow if arrow active mode is on
 
         // TODO diagram: add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
-        $('#diagram').droppable({
+        _this.area.droppable({
             drop: function(event, ui) {
                 _this.addDevice(event, ui);
             }
         });
 
         // TODO diagram: attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
+        $("body").mousedown(function(){
+            $(".contextMenu").css("display", "none");
+            if (_this.selectedDevice !== null) {
+                _this.selectedDevice.setActive(false);
+            }
+        });
 
         // TODO diagram: attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
 
@@ -131,8 +142,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
 
         if ($(ui.helper).hasClass('device-image')) {      // TODO check if completely inside the diagram      
             _this.count = _this.count + 1;
-            var relX = ui.helper.offset().top - _this.area.offset().top;
-            var relY = ui.helper.offset().left - _this.area.offset().left;
+            var relX = ui.helper.offset().left - _this.area.offset().left;
+            var relY = ui.helper.offset().top - _this.area.offset().top;
             var type = $(ui.helper.context).attr('data-device-type');
             var title = type + ' ' + _this.count;
 
@@ -164,6 +175,13 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function showContextMenu(device, event) {
         // TODO diagram: show context menu + select device + deactivate arrow drawing
+        console.log("TODO: Context menu.");
+        console.log("Device index: " + device.index);
+        console.log(event);
+        $(".contextMenu").css("display", "block");
+        $(".contextMenu").css("left", event.pageX + "px");
+        $(".contextMenu").css("top", event.pageY + "px");
+        $(".contextMenu").css("position", "absolute");
     }
 
     /**
@@ -178,6 +196,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
          *              + if selected device before is equal to new selected device, disable arrow drawing mode and delete drawn arrow from device to mouse position
          */
         //
+
+        selectDevice(device);
     }
 
     /**
@@ -202,6 +222,14 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function selectDevice(device) {
         // TODO diagram: select device
+        if (_this.selectedDevice !== null) {
+            _this.selectedDevice.setActive(false);
+        }
+
+        if (device !== null) {
+            _this.selectedDevice = device;
+            _this.selectedDevice.setActive(true);
+        }
     }
 
     /**

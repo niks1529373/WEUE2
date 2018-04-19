@@ -64,7 +64,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     const object = $(
         // TODO device: create html container
-        "<div class='device-element'></div>"
+        "<div class='device device-element'></div>"
     );
 
     (function() {           // wrapped in function to prevent imgList and deviceListElement to have global scope
@@ -76,7 +76,9 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         diagram.area.prepend(object);
 
         // TODO device: initialize the device position
-        $(object[0]).css({ 'top' :  position[0] + 'px', 'left' : position[1] + 'px', 'position':'absolute'});
+        object.css("left", position[0] + "px");
+        object.css("top", position[1] + "px");
+        object.css("position", "absolute");
 
         // create device list element
         var imgList = $(image);
@@ -108,8 +110,16 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function attachEventHandlers() {
         // TODO device: attach context menu to device (call showContextMenu() in model-diagram.js if context menu is called)
+        object.on("contextmenu", function(ev) {
+            diagram.showContextMenu(_this, ev);
+        });
 
         // TODO device: attach events for functionality like in assignment-document described
+        object.mousedown(function(ev){
+            diagram.deviceMouseDown(_this)
+            $(".contextMenu").css("display", "none");
+            ev.stopPropagation();
+        });
 
         // TODO device: attach drag & drop functionality
         object.draggable({ containment: "#diagram" });
@@ -123,6 +133,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function setActive(active) {
         // TODO device: set/remove active class of device
+        if (active === true) {
+            object.addClass("active");
+        } else {
+            object.removeClass("active");
+        }
+
     }
 
     /**

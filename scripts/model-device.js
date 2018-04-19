@@ -67,8 +67,11 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         "<div class='device device-element'></div>"
     );
 
+    // TODO device: add variables if necessary
+    this.deviceListElement = null;
+
     (function() {           // wrapped in function to prevent imgList and deviceListElement to have global scope
-        // TODO device: add variables if necessary
+
         object.width("100px");
         object.append(image);
 
@@ -83,7 +86,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // create device list element
         var imgList = $(image);
         imgList.width("60px");
-        var deviceListElement = '' +
+        _this.deviceListElement = $('' +
             '<li class="device device-list-element">' +
             '<div class="device-image device-list-picture"> ' +
             imgList.prop("outerHTML") +
@@ -95,11 +98,11 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
             '   <dt class="accessibility">Vorgänger</dt>' +
             '   <dd name="predecessor">Vorgänger:</dd>' +
 
-            '   <dt class="accessibility">Nachvolger</dt>' +
-            '   <dd name="successor">Nachvolger:</dd>' +
+            '   <dt class="accessibility">Nachfolger</dt>' +
+            '   <dd name="successor">Nachfolger:</dd>' +
             '</dl>' +
-            '</li>';
-        $('.devices.device-list').append(deviceListElement);
+            '</li>');
+        $('.devices.device-list').append(_this.deviceListElement);
 
         // Initialize the event handlers
         attachEventHandlers();
@@ -125,6 +128,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         object.draggable({ containment: "#diagram" });
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
+
     }
 
     /**
@@ -208,6 +212,8 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function deleteDevice() {
         // TODO device: delete device from HTML DOM and delete connected arrows
+        object.remove();
+        _this.deviceListElement.remove();
 
         let deletedArrows = 0;
         return deletedArrows;

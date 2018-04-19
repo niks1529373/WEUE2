@@ -68,7 +68,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
 
         // TODO diagram: attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
         $("body").mousedown(function(){
-            $(".contextMenu").css("display", "none");
+            //$(".contextMenu").css("display", "none");
             if (_this.selectedDevice !== null) {
                 _this.selectedDevice.setActive(false);
             }
@@ -77,6 +77,18 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
 
         // TODO diagram: attach events for context menu items ('Detailseite', 'Löschen')
+        $(".contextView").click(function(ev) {
+            console.log("Detailseite clicked");
+            alert("Detailseite"); //TODO
+            ev.stopPropagation();
+            $(".contextMenu").css("display", "none");
+        });
+
+        $(".contextDelete").click(function(ev) {
+            deleteSelectedDevice();
+            ev.stopPropagation();
+            $(".contextMenu").css("display", "none");
+        });
     }
 
     /**
@@ -175,9 +187,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function showContextMenu(device, event) {
         // TODO diagram: show context menu + select device + deactivate arrow drawing
-        console.log("TODO: Context menu.");
-        console.log("Device index: " + device.index);
-        console.log(event);
         $(".contextMenu").css("display", "block");
         $(".contextMenu").css("left", event.pageX + "px");
         $(".contextMenu").css("top", event.pageY + "px");
@@ -244,6 +253,9 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function deleteSelectedDevice() {
         // TODO diagram: delete selected device
+        if (_this.selectedDevice !== null) {
+            _this.selectedDevice.deleteDevice();
+        }
     }
 
     // Export some methods

@@ -68,23 +68,34 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
 
         // TODO diagram: attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
         $("body").mousedown(function(){
-            //$(".contextMenu").css("display", "none");
+            $(".contextMenu").css("display", "none");
             if (_this.selectedDevice !== null) {
                 _this.selectedDevice.setActive(false);
             }
         });
 
         // TODO diagram: attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
+        $("html").keypress("DEL", function() {
+            deleteSelectedDevice();
+        });
+
+        $("html").keypress("A", function() {
+            toggleArrowActive();
+        });
+
+        $("html").keypress("a", function() {
+            toggleArrowActive();
+        });
 
         // TODO diagram: attach events for context menu items ('Detailseite', 'Löschen')
-        $(".contextView").click(function(ev) {
+        $(".contextView").mousedown(function(ev) {
             console.log("Detailseite clicked");
             alert("Detailseite"); //TODO
             ev.stopPropagation();
             $(".contextMenu").css("display", "none");
         });
 
-        $(".contextDelete").click(function(ev) {
+        $(".contextDelete").mousedown(function(ev) {
             deleteSelectedDevice();
             ev.stopPropagation();
             $(".contextMenu").css("display", "none");
@@ -255,6 +266,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: delete selected device
         if (_this.selectedDevice !== null) {
             _this.selectedDevice.deleteDevice();
+            devicesCounter.alterCount(-1);
         }
     }
 

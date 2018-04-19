@@ -67,6 +67,11 @@ function Arrow(diagram, startDevice) {
      */
     function setActive(active) {
         // TODO arrow: set/remove active class of arrow
+        if (active === true) {
+            object.addClass("active");
+        } else {
+            object.removeClass("active");
+        }
     }
 
     /**

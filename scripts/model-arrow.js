@@ -21,29 +21,19 @@ function Arrow(diagram, startDevice) {
      */
     this.endDevice = null;
 
-    //document.createElementNS('http://www.w3.org/2000/svg', "<path d='M0,4 L16,4 z' marker-end='url(#arrow-marker)'></path>");
-    var cursorElem = document.createElementNS('http://www.w3.org/2000/svg', "line");
-    cursorElem.setAttribute("x1", "0");
-    cursorElem.setAttribute("y1", "0");
-    cursorElem.setAttribute("x2", "0");
-    cursorElem.setAttribute("y2", "0");
-    cursorElem.setAttribute("marker-end", "url(#arrow-marker");
-    cursorElem.setAttribute("stroke", "black");
-    cursorElem.setAttribute("stroke-width", "2");
-
     /**
      * The jQuery DOM object representing this arrow
      */
     const object = $(
         // TODO arrow: create jQuery object for the SVG path
-        cursorElem
+        document.createElementNS('http://www.w3.org/2000/svg', "line")
     );
 
+    object.attr("marker-end", "url(#arrow-marker");
+    object.attr("stroke", "black");
+    object.attr("stroke-width", "2");
 
     // TODO arrow: add variables if necessary
-    object.css("z-index", 2);
-    object.css("display", "block");
-
 
     // TODO arrow: append the arrow DOM object to the arrows svg
     $(".arrows > svg").append(object);
@@ -96,11 +86,10 @@ function Arrow(diagram, startDevice) {
         // TODO arrow: draw an arrow between the start device and the given end position
         // HINT You can use Device.getIntersectionCoordinates to calculate the coordinates for the start device
         var startPosition = startDevice.getIntersectionCoordinates(endPosition);
-        object.get(0).setAttribute("x1", startPosition[0]);
-        object.get(0).setAttribute("y1", startPosition[1]);
-        object.get(0).setAttribute("x2", endPosition[0]);
-        object.get(0).setAttribute("y2", endPosition[1]);
-        //object.get(0).setAttribute("d", "M" + startPosition[0] + "," + startPosition[1] + " L" + endPosition[0] + "," + endPosition[1] + " z");
+        object.attr("x1", startPosition[0]);
+        object.attr("y1", startPosition[1]);
+        object.attr("x2", endPosition[0]);
+        object.attr("y2", endPosition[1]);
     }
 
     /**

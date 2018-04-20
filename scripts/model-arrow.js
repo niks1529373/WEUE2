@@ -114,6 +114,7 @@ function Arrow(diagram, startDevice) {
      */
     function deleteArrow() {
         // TODO arrow: delete arrow from HTML DOM and from the devices of the endpoints of the arrow
+        //object.delete();
     }
 
     // Export some of the methods

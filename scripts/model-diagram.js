@@ -64,7 +64,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         _this.area.mousemove(function(ev) {
             if (_this.drawArrowMode === true && _this.drawingArrow !== null) {
                 var offset = _this.area.offset();
-                console.log("Moving arrow to: X: " + ev.pageX + " Y: " + ev.pageY);
                 _this.drawingArrow.updateEndPosition([ev.pageX - offset.left, ev.pageY - offset.top]);
             }
         });

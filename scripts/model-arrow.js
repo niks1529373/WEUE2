@@ -46,6 +46,12 @@ function Arrow(diagram, startDevice) {
      */
     function attachEventHandlers() {
         // TODO arrow: attach events for functionality like in assignment-document described
+        object.mousedown(function(ev) {
+            if (_this.endDevice !== null) {
+                diagram.arrowClick(_this);
+                ev.stopPropagation();
+            }
+        });
 
         // TODO arrow optional: attach events for bonus points for 'TAB' to switch between arrows and to select arrow
     }
@@ -98,6 +104,16 @@ function Arrow(diagram, startDevice) {
     function updateArrow() {
         // TODO arrow: draw an arrow between the start and end device
         // HINT You can use Device.getCenterCoordinates and Device.getIntersectionCoordinates
+        if (_this.endDevice !== null) {
+            var startCenter = _this.startDevice.getCenterCoordinates();
+            var endCenter = _this.endDevice.getCenterCoordinates();
+            var startPosition = _this.startDevice.getIntersectionCoordinates(endCenter);
+            var endPosition = _this.endDevice.getIntersectionCoordinates(startCenter);
+            object.attr("x1", startPosition[0]);
+            object.attr("y1", startPosition[1]);
+            object.attr("x2", endPosition[0]);
+            object.attr("y2", endPosition[1]);
+        }
     }
 
     /**
@@ -114,7 +130,13 @@ function Arrow(diagram, startDevice) {
      */
     function deleteArrow() {
         // TODO arrow: delete arrow from HTML DOM and from the devices of the endpoints of the arrow
-        //object.delete();
+        _this.startDevice.deleteArrow(_this);
+
+        if (_this.endDevice !== null) {
+            _this.endDevice.deleteArrow(_this);
+
+        }
+        object.remove();
     }
 
     // Export some of the methods

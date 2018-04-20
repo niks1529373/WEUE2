@@ -122,7 +122,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         });
 
         // TODO device: attach drag & drop functionality
-        object.draggable({ containment: "#diagram" });
+        object.draggable({ containment: "#diagram",
+            stop: function() {
+                moveDevice();
+            }
+        });
+
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
 
@@ -163,6 +168,14 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
     function moveDevice() {
         // TODO device: update endpoints of arrows
         // HINT You can use Arrow.updateArrow()
+        var i;
+        for (i = 0; i < arrowsIn.length; ++i) {
+            arrowsIn[i].updateArrow();
+        }
+
+        for (i = 0; i < arrowsOut.length; ++i) {
+            arrowsOut[i].updateArrow();
+        }
     }
 
     /**
@@ -210,9 +223,19 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function deleteDevice() {
         // TODO device: delete device from HTML DOM and delete connected arrows
+        let deletedArrows = 0;
+
+        var i;
+        for (i = 0; i < arrowsIn.length; ++i) {
+            arrowsIn[i].deleteArrow();
+        }
+
+        for (i = 0; i < arrowsOut.length; ++i) {
+            arrowsOut[i].deleteArrow();
+        }
+
         object.remove();
 
-        let deletedArrows = 0;
         return deletedArrows;
     }
 
@@ -222,6 +245,20 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function deleteArrow(arrow) {
         // TODO device: delete arrow from arrowsIn/arrowsOut and update predecessors and successors
+        var i = arrowsIn.indexOf(arrow);
+
+        if (i !== -1) {
+            arrowsIn.splice(i);
+            updatePredecessors();
+        } else {
+            i = arrowsOut.indexOf(arrow);
+            if (i !== -1) {
+                arrowsOut.splice(i);
+                updateSuccessors();
+            }
+        }
+
+
     }
 
     /**
@@ -265,6 +302,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
     // Export some of the methods
     this.setActive = setActive;
     this.updateDevice = updateDevice;
+    this.getCenterCoordinates = getCenterCoordinates;
     this.getIntersectionCoordinates = getIntersectionCoordinates;
     this.isConnectedTo = isConnectedTo;
     this.addArrowIn = addArrowIn;

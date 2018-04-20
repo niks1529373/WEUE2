@@ -26,6 +26,7 @@ function Arrow(diagram, startDevice) {
      */
     const object = $(
         // TODO arrow: create jQuery object for the SVG path
+        "<path d='M0,4 L16,4' marker-end='url(#arrow-marker)'></path>"
     );
 
 
@@ -33,6 +34,7 @@ function Arrow(diagram, startDevice) {
 
 
     // TODO arrow: append the arrow DOM object to the arrows svg
+    $(".arrows").find("svg").append(object);
 
     // Initialize the event handlers
     attachEventHandlers();
@@ -81,6 +83,8 @@ function Arrow(diagram, startDevice) {
     function updateEndPosition(endPosition) {
         // TODO arrow: draw an arrow between the start device and the given end position
         // HINT You can use Device.getIntersectionCoordinates to calculate the coordinates for the start device
+        var startPosition = startDevice.getIntersectionCoordinates(endPosition);
+        object.attr("d", "M" + startPosition[0] + "," + startPosition[1] + " L" + endPosition[0] + "," + endPosition[1]);
     }
 
     /**

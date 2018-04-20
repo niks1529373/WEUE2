@@ -61,6 +61,14 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         });
 
         // TODO diagram: attach mouse move event and draw arrow if arrow active mode is on
+        /*
+        _this.area.mousemove(function(ev) {
+            if (_this.drawArrowMode === true && _this.drawingArrow !== null) {
+                console.log("Moving arrow to: X: " + ev.pageX + " Y: " + ev.pageY);
+                _this.drawingArrow.updateEndPosition([ev.pageX, ev.pageY]);
+            }
+        });
+        */
 
         // TODO diagram: add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
         _this.area.droppable({

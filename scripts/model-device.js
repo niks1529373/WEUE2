@@ -119,7 +119,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
 
         // TODO device: attach events for functionality like in assignment-document described
         object.mousedown(function(ev) {
-            diagram.deviceMouseDown(_this)
+            diagram.deviceMouseDown(_this);
             $(".contextMenu").css("display", "none");
             ev.stopPropagation();
         });

@@ -46,6 +46,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     this.selectedDevice = null;
     this.selectedArrow = null;
     this.drawArrowMode = false;
+    this.drawingArrow = null;
 
     // Initialize events
     attachEventHandlers();
@@ -133,9 +134,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function activateArrowDrawing() {
         // TODO diagram: reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
-        console.log("Activate arrow");
         _this.drawArrowMode = true;
-        $(".arrow").addClass("active");
+        $("#arrow-sidebar-add").addClass("active");
     }
 
     /**
@@ -143,9 +143,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function deactivateArrowDrawing() {
         // TODO diagram: disable arrow active mode and remove active class to arrow button in sidebar
-        console.log("Deactivate arrow");
         _this.drawArrowMode = false;
-        $(".arrow").removeClass("active");
+        $("#arrow-sidebar-add").removeClass("active");
     }
 
     /**
@@ -239,11 +238,22 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
          *              + if selected device before is equal to new selected device, disable arrow drawing mode and delete drawn arrow from device to mouse position
          */
         //
-
-        if (_this.selectedDevice !== device) {
-            selectDevice(device);
+        if (_this.drawArrowMode === true) {
+            if (_this.selectedDevice === null) {
+                _this.drawingArrow = new Arrow(diagram, device);
+                selectDevice(device);
+            } else if (_this.selectedDevice === device) {
+                _this.drawingArrow.deleteArrow();
+                _this.drawingArrow = null;
+                deactivateArrowDrawing();
+            } else {
+                _this.selectedDevice.addArrowOut(_this.drawingArrow);
+                device.addArrowIn(_this.drawingArrow);
+                addArrow();
+                selectDevice(device);
+            }
         } else {
-            selectDevice(null);
+            selectDevice(device);
         }
 
     }
@@ -254,6 +264,13 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function deviceMouseUp(device) {
         // TODO diagram: if drawing arrow mode is enabled and start device != end device, set end device of drawing arrow and add drawing arrow with addArrow()
+        if (_this.drawArrowMode === true && _this.selectedDevice !== null && device !== null) {
+            if (_this.selectedDevice !== device) {
+                _this.selectedDevice.addArrowOut(_this.drawingArrow);
+                device.addArrowIn(_this.drawingArrow);
+                addArrow();
+            }
+        }
     }
 
     /**

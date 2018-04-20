@@ -68,7 +68,6 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
     );
 
     // TODO device: add variables if necessary
-    this.deviceListElement = null;
 
     (function() {           // wrapped in function to prevent imgList to have global scope
 
@@ -212,7 +211,6 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
     function deleteDevice() {
         // TODO device: delete device from HTML DOM and delete connected arrows
         object.remove();
-        _this.deviceListElement.remove();
 
         let deletedArrows = 0;
         return deletedArrows;

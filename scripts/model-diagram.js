@@ -193,10 +193,12 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var relX = ui.helper.offset().left - _this.area.offset().left;
             var relY = ui.helper.offset().top - _this.area.offset().top;
             var type = $(ui.helper.context).attr('data-device-type');
+            var max = $(ui.helper.context).attr('data-device-max');
+            var min = $(ui.helper.context).attr('data-device-min');
             var title = type + ' ' + _this.count;
 
             //new Device TODO: What is the max, min value ?
-            var device = new Device(_this, _this.count, [relX, relY], title, type, 0, 0, images[type], update[type]);
+            var device = new Device(_this, _this.count, [relX, relY], title, type, max, min, images[type], update[type]);
 
             // add device to Controls
             controls.addDevice(device);

@@ -64,45 +64,36 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     const object = $(
         // TODO device: create html container
-        "<div class='device device-element'></div>"
+        '<li class="device"></li>'
     );
 
     // TODO device: add variables if necessary
     this.deviceListElement = null;
 
-    (function() {           // wrapped in function to prevent imgList and deviceListElement to have global scope
-
-        object.width("100px");
-        object.append(image);
-
-        // TODO device: append the device DOM object to the diagram area
-        diagram.area.prepend(object);
-
-        // TODO device: initialize the device position
-        object.css("left", position[0] + "px");
-        object.css("top", position[1] + "px");
-        object.css("position", "absolute");
+    (function() {           // wrapped in function to prevent imgList to have global scope
 
         // create device list element
         var imgList = $(image);
-        imgList.width("60px");
-        _this.deviceListElement = $('' +
-            '<li class="device device-list-element">' +
-            '<div class="device-image device-list-picture"> ' +
-            imgList.prop("outerHTML") +
-            '</div>' +
+    
+        object.append('' +
             '<dl class="device-properties">' +
             '   <dt class="accessibility">Maschinentyp</dt>' +
-            '   <dd id="type-machine" class="device-type">' + type + ' ' + _this.index + '</dd>' +
+            '   <dd id="type-machine" class="device-name">' + type + ' ' + _this.index + '</dd>' +
 
             '   <dt class="accessibility">Vorgänger</dt>' +
-            '   <dd name="predecessor">Vorgänger:</dd>' +
+            '   <dd class="device-neighbour" classname="predecessor">Vorgänger:</dd>' +
 
             '   <dt class="accessibility">Nachfolger</dt>' +
-            '   <dd name="successor">Nachfolger:</dd>' +
+            '   <dd class="device-neighbour" name="successor">Nachfolger:</dd>' +
             '</dl>' +
-            '</li>');
-        $('.devices.device-list').append(_this.deviceListElement);
+            '<div class="device-image"> ' +
+                imgList.prop("outerHTML") +
+            '</div>');
+
+        $('.devices.device-list').append(object);
+
+        object.css("left", position[0] + "px");
+        object.css("top", position[1] + "px");
 
         // Initialize the event handlers
         attachEventHandlers();
@@ -156,6 +147,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the list of predecessors in the DOM
      */
     function updatePredecessors() {
+
         // TODO device: update predecessors in overview.html of device like in UE1
     }
 

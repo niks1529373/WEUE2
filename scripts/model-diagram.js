@@ -61,14 +61,13 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         });
 
         // TODO diagram: attach mouse move event and draw arrow if arrow active mode is on
-        /*
         _this.area.mousemove(function(ev) {
             if (_this.drawArrowMode === true && _this.drawingArrow !== null) {
+                var offset = _this.area.offset();
                 console.log("Moving arrow to: X: " + ev.pageX + " Y: " + ev.pageY);
-                _this.drawingArrow.updateEndPosition([ev.pageX, ev.pageY]);
+                _this.drawingArrow.updateEndPosition([ev.pageX - offset.left, ev.pageY - offset.top]);
             }
         });
-        */
 
         // TODO diagram: add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
         _this.area.droppable({
@@ -84,11 +83,18 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
                 _this.selectedDevice.setActive(false);
                 _this.selectedDevice = null;
             }
+
+            deactivateArrowDrawing();
         });
 
         // Handler for clicking on the arrow button
-        $(".arrow").mousedown(function() {
+        $(".arrow").mousedown(function(ev) {
+            if (_this.selectedDevice !== null) {
+                _this.selectedDevice.setActive(false);
+                _this.selectedDevice = null;
+            }
             toggleArrowActive();
+            ev.stopPropagation();
         });
 
         // TODO diagram: attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
@@ -152,6 +158,10 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     function deactivateArrowDrawing() {
         // TODO diagram: disable arrow active mode and remove active class to arrow button in sidebar
         _this.drawArrowMode = false;
+        if (_this.drawingArrow !== null) {
+            _this.drawingArrow.deleteArrow();
+            _this.drawingArrow = null;
+        }
         $("#arrow-sidebar-add").removeClass("active");
     }
 
@@ -261,6 +271,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
                 device.addArrowIn(_this.drawingArrow);
                 addArrow();
                 selectDevice(device);
+                deactivateArrowDrawing();
             }
         } else {
             selectDevice(device);
@@ -279,6 +290,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
                 _this.selectedDevice.addArrowOut(_this.drawingArrow);
                 device.addArrowIn(_this.drawingArrow);
                 addArrow();
+                deactivateArrowDrawing();
             }
         }
     }

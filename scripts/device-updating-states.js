@@ -16,7 +16,18 @@ const update = {
  * @param value The new value to set
  */
 function updateItemGenerator(container, min, max, value) {
-    // TODO update svg: see assignment document
+    
+    if(value >= min && value <= max){
+        container.find('.thirdPlane').show();
+        container.find('.secondPlane').show();
+        if(value == 0){
+            container.find('.thirdPlane').hide();
+            container.find('.secondPlane').hide();
+        }else if(value == 1){
+            container.find('.thirdPlane').hide();
+        }
+
+    }
 
 }
 
@@ -28,7 +39,33 @@ function updateItemGenerator(container, min, max, value) {
  * @param value The new value to set
  */
 function updateMachine(container, min, max, value) {
-    // TODO update svg: see assignment document
+
+    if(value >= min && value <= max){
+
+        var color = "#FF0000";
+        var height = 50;
+        if(value < 34){
+            height = 250;
+            color = "#009933";
+        }else if(value < 67){
+            height = 200;
+            color = "FF8000";
+        }
+
+        // set color of thermostat
+        container.find('#path3680').css("fill", color);
+        
+        // set height of thermostat
+        var path = container.find('#path3680')[0].getAttribute('d');
+        var index = path.indexOf('V')
+        // delete old value
+        path = path.replace(path.substring(index + 2, path.indexOf('H') - 1), "");
+
+        // insert new value
+        path = [path.slice(0, index+2), height, path.slice(index+2)].join('');
+
+        container.find('#path3680')[0].setAttribute('d', path);        
+    }
 
 }
 
@@ -40,8 +77,11 @@ function updateMachine(container, min, max, value) {
  * @param value The new value to set
  */
 function updateConveyor(container, min, max, value) {
-    // TODO update svg: see assignment document
-
+    if(value == 0){
+        container.find('.package').hide();
+    }else if(value == 1){
+        container.find('.package').show();
+    }
 }
 
 /**
@@ -52,7 +92,14 @@ function updateConveyor(container, min, max, value) {
  * @param value The new value to set
  */
 function updateIntelligentConveyor(container, min, max, value) {
-    // TODO update svg: see assignment document
+    if(value == 0){
+        container.find('#g4249').hide();
+        container.find('.packageRight').hide();
+    }else if(value == 1){
+        container.find('#g4249').show();
+        container.find('.packageRight').show();
+    }
+    
 
 }
 
@@ -64,8 +111,18 @@ function updateIntelligentConveyor(container, min, max, value) {
  * @param value The new value to set
  */
 function updateInterimStorage(container, min, max, value) {
-    // TODO update svg: see assignment document
+    if(value >= min && value <= max){
+        container.find(".packageBottom").show();
+        container.find(".packageTop").show();
+        if(value < 5){
+            container.find(".packageTop").hide();
+        }
+        if(value < 1){
+            container.find(".packageBottom").hide();
+        }
+    }
 
+   
 }
 
 /**
@@ -76,6 +133,9 @@ function updateInterimStorage(container, min, max, value) {
  * @param value The new value to set
  */
 function updateStorage(container, min, max, value) {
-    // TODO update svg: see assignment document
+
+    if(value >= min && value <= max){
+        container.find("text").find("tspan").text(value);
+    }
 
 }

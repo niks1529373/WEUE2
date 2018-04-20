@@ -198,7 +198,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var title = type + ' ' + _this.count;
 
             //new Device TODO: What is the max, min value ?
-            var device = new Device(_this, _this.count, [relX, relY], title, type, max, min, images[type], update[type]);
+            var device = new Device(_this, _this.count, [relX, relY], type, title, min, max, images[type], update[type]);
 
             // add device to Controls
             controls.addDevice(device);
@@ -330,7 +330,10 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     function deleteSelectedDevice() {
         // TODO diagram: delete selected device
         if (_this.selectedDevice !== null) {
+
             _this.selectedDevice.deleteDevice();
+            controls.removeDevice(_this.selectedDevice);
+
             _this.selectedDevice = null;
             devicesCounter.alterCount(-1);
         }

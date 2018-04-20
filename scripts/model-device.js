@@ -96,6 +96,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
 
         // Initialize the event handlers
         attachEventHandlers();
+
     })();
 
     /**

@@ -264,7 +264,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         //
         if (_this.drawArrowMode === true) {
             if (_this.selectedDevice === null) {
-                _this.drawingArrow = new Arrow(diagram, device);
+                _this.drawingArrow = new Arrow(_this, device);
                 selectDevice(device);
             } else if (_this.selectedDevice === device) {
                 _this.drawingArrow.deleteArrow();

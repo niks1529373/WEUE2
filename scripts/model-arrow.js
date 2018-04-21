@@ -130,6 +130,7 @@ function Arrow(diagram, startDevice) {
      */
     function deleteArrow() {
         // TODO arrow: delete arrow from HTML DOM and from the devices of the endpoints of the arrow
+        console.log("arrow.deleteArrow() called.");
         _this.startDevice.deleteArrow(_this);
 
         if (_this.endDevice !== null) {

@@ -226,16 +226,26 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // TODO device: delete device from HTML DOM and delete connected arrows
         let deletedArrows = 0;
 
-        var i;
-        for (i = 0; i < arrowsIn.length; ++i) {
-            arrowsIn[i].deleteArrow();
-        }
+        console.log("Found " + arrowsIn.length + " ingoing arrows and " + arrowsOut.length + " outgoing arrows.");
 
-        for (i = 0; i < arrowsOut.length; ++i) {
-            arrowsOut[i].deleteArrow();
+        while (arrowsIn.length > 0) {
+            console.log(arrowsIn.length + " arrowsIn.length");
+            arrowsIn[0].deleteArrow();
+            deletedArrows++;
+            console.log(arrowsIn.length + " arrowsIn.length (endloop)");
+        }
+        console.log("Deleted " + deletedArrows + " ingoing arrows.");
+
+        while (arrowsOut.length > 0) {
+            console.log(arrowsOut.length + " arrowsOut.length (startloop)");
+            arrowsOut[0].deleteArrow();
+            deletedArrows++;
+            console.log(arrowsOut.length + " arrowsOut.length (endloop)");
         }
 
         object.remove();
+
+        console.log("Deleted " + deletedArrows + " arrows in total.");
 
         return deletedArrows;
     }
@@ -249,12 +259,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         var i = arrowsIn.indexOf(arrow);
 
         if (i !== -1) {
-            arrowsIn.splice(i);
+            arrowsIn.splice(i, 1);
             updatePredecessors();
         } else {
             i = arrowsOut.indexOf(arrow);
             if (i !== -1) {
-                arrowsOut.splice(i);
+                arrowsOut.splice(i, 1);
                 updateSuccessors();
             }
         }

@@ -93,10 +93,10 @@ function updateConveyor(container, min, max, value) {
  */
 function updateIntelligentConveyor(container, min, max, value) {
     if(value == 0){
-        container.find('#g4249').hide();
+        container.find('.packageLeft').hide();
         container.find('.packageRight').hide();
     }else if(value == 1){
-        container.find('#g4249').show();
+        container.find('.packageLeft').show();
         container.find('.packageRight').show();
     }
     

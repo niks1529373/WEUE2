@@ -141,9 +141,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function addArrow() {
         // TODO diagram: if drawing arrow mode is on, create Arrow object
-        arrowsCounter.alterCount(1);
         if (!_this.drawingArrow.add()) {
-            arrowsCounter.alterCount(-1);
             _this.drawingArrow.deleteArrow();
         }
 

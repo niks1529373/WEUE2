@@ -73,6 +73,7 @@ function Arrow(diagram, startDevice) {
             return false;
         }
 
+        diagram.arrowsCounter.alterCount(1);
         _this.startDevice.addArrowOut(_this);
         _this.endDevice.addArrowIn(_this);
         object.addClass("arrow-path-added");
@@ -142,11 +143,11 @@ function Arrow(diagram, startDevice) {
         _this.startDevice.deleteArrow(_this);
 
         if (_this.endDevice !== null) {
+            diagram.arrowsCounter.alterCount(-1);
             _this.endDevice.deleteArrow(_this);
 
         }
 
-        diagram.arrowsCounter.alterCount(-1)
         object.remove();
     }
 

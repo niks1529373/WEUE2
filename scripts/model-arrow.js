@@ -32,6 +32,7 @@ function Arrow(diagram, startDevice) {
     object.attr("marker-end", "url(#arrow-marker");
     object.attr("stroke", "black");
     object.attr("stroke-width", "2");
+    object.attr("tabindex", "0");
 
     // TODO arrow: add variables if necessary
 
@@ -48,6 +49,13 @@ function Arrow(diagram, startDevice) {
         // TODO arrow: attach events for functionality like in assignment-document described
         object.mousedown(function(ev) {
             if (_this.endDevice !== null) {
+                diagram.arrowClick(_this);
+                ev.stopPropagation();
+            }
+        });
+
+        object.keyup(function(ev) {
+            if (ev.key === "Enter") {
                 diagram.arrowClick(_this);
                 ev.stopPropagation();
             }
@@ -130,12 +138,15 @@ function Arrow(diagram, startDevice) {
      */
     function deleteArrow() {
         // TODO arrow: delete arrow from HTML DOM and from the devices of the endpoints of the arrow
+        console.log("arrow.deleteArrow() called.");
         _this.startDevice.deleteArrow(_this);
 
         if (_this.endDevice !== null) {
             _this.endDevice.deleteArrow(_this);
 
         }
+
+        diagram.arrowsCounter.alterCount(-1)
         object.remove();
     }
 

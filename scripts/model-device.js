@@ -64,7 +64,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     const object = $(
         // TODO device: create html container
-        '<li class="device"></li>'
+        '<li class="device" tabindex="0"></li>'
     );
 
     // TODO device: add variables if necessary
@@ -77,13 +77,13 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         object.append('' +
             '<dl class="device-properties">' +
             '   <dt class="accessibility">Maschinentyp</dt>' +
-            '   <dd id="type-machine" class="device-name">' + type + ' ' + _this.index + '</dd>' +
+            '   <dd id="type-machine" class="device-name">' + title + '</dd>' +
 
-            '   <dt class="accessibility">Vorgänger</dt>' +
-            '   <dd class="device-neighbour" classname="predecessor">Vorgänger:</dd>' +
+            '   <dt>Vorgänger:</dt>' +
+            '   <dd class="device-predecessor" classname="predecessor"></dd>' +
 
-            '   <dt class="accessibility">Nachfolger</dt>' +
-            '   <dd class="device-neighbour" name="successor">Nachfolger:</dd>' +
+            '   <dt>Nachfolger:</dt>' +
+            '   <dd class="device-successor" name="successor"></dd>' +
             '</dl>' +
             '<div class="device-image"> ' +
                 imgList.prop("outerHTML") +
@@ -118,20 +118,31 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // Hover for arrow
         object.hover(function() {
             object.append($("#arrow-device-add-reference").clone(false));
+            object.find("#arrow-device-add-reference").mousedown(function(ev) {
+                console.log('minipfeil');
+                diagram.selectDevice(null);
+                diagram.activateArrowDrawing();
+                //ev.stopPropagation();
+            });
         }, function() {
             object.find("#arrow-device-add-reference").remove();
         });
 
         // TODO device: attach drag & drop functionality
         object.draggable({ containment: "#diagram",
-            stop: function() {
+            drag: function() {
                 moveDevice();
             }
         });
 
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
-
+        object.keyup(function(ev) {
+            if (ev.key === "Enter") {
+                diagram.deviceMouseDown(_this);
+                diagram.selectDevice(_this);
+            }
+        });
     }
 
     /**
@@ -152,8 +163,17 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the list of predecessors in the DOM
      */
     function updatePredecessors() {
-
         // TODO device: update predecessors in overview.html of device like in UE1
+
+        object.find('.device-predecessor').empty();
+        $.each(arrowsIn, function (index, value) {
+            if (index === 0) {
+                object.find('.device-predecessor').append(value.startDevice.title);
+            } else {
+                object.find('.device-predecessor').append(', ' + value.startDevice.title);
+            }
+        });
+
     }
 
     /**
@@ -161,6 +181,15 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function updateSuccessors() {
         // TODO device: update successors in overview.html of device like in UE1
+
+        object.find('.device-successor').empty();
+        $.each(arrowsOut, function (index, value) {
+            if (index === 0) {
+                object.find('.device-successor').append(value.endDevice.title);
+            } else {
+                object.find('.device-successor').append(', ' + value.endDevice.title);
+            }
+        });
     }
 
     /**
@@ -226,16 +255,26 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // TODO device: delete device from HTML DOM and delete connected arrows
         let deletedArrows = 0;
 
-        var i;
-        for (i = 0; i < arrowsIn.length; ++i) {
-            arrowsIn[i].deleteArrow();
-        }
+        console.log("Found " + arrowsIn.length + " ingoing arrows and " + arrowsOut.length + " outgoing arrows.");
 
-        for (i = 0; i < arrowsOut.length; ++i) {
-            arrowsOut[i].deleteArrow();
+        while (arrowsIn.length > 0) {
+            console.log(arrowsIn.length + " arrowsIn.length");
+            arrowsIn[0].deleteArrow();
+            deletedArrows++;
+            console.log(arrowsIn.length + " arrowsIn.length (endloop)");
+        }
+        console.log("Deleted " + deletedArrows + " ingoing arrows.");
+
+        while (arrowsOut.length > 0) {
+            console.log(arrowsOut.length + " arrowsOut.length (startloop)");
+            arrowsOut[0].deleteArrow();
+            deletedArrows++;
+            console.log(arrowsOut.length + " arrowsOut.length (endloop)");
         }
 
         object.remove();
+
+        console.log("Deleted " + deletedArrows + " arrows in total.");
 
         return deletedArrows;
     }
@@ -249,12 +288,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         var i = arrowsIn.indexOf(arrow);
 
         if (i !== -1) {
-            arrowsIn.splice(i);
+            arrowsIn.splice(i, 1);
             updatePredecessors();
         } else {
             i = arrowsOut.indexOf(arrow);
             if (i !== -1) {
-                arrowsOut.splice(i);
+                arrowsOut.splice(i, 1);
                 updateSuccessors();
             }
         }

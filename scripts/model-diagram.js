@@ -103,6 +103,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             console.log(ev.key);
             if (ev.key === "Delete") {
                 deleteSelectedDevice();
+                deleteSelectedArrow();
             } else if (ev.key === "A" || ev.key === "a") {
                 toggleArrowActive();
             }
@@ -111,7 +112,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: attach events for context menu items ('Detailseite', 'Löschen')
         $(".contextView").mousedown(function(ev) {
             console.log("Detailseite clicked");
-            alert("Detailseite"); //TODO
+            alert(_this.selectedDevice.title); //TODO
             ev.stopPropagation();
             context.css("display", "none");
         });
@@ -140,7 +141,9 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function addArrow() {
         // TODO diagram: if drawing arrow mode is on, create Arrow object
+        arrowsCounter.alterCount(1);
         if (!_this.drawingArrow.add()) {
+            arrowsCounter.alterCount(-1);
             _this.drawingArrow.deleteArrow();
         }
 
@@ -154,6 +157,9 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
         _this.drawArrowMode = true;
         arrowButton.addClass("active");
+        if (_this.selectedDevice !== null) {
+            _this.drawingArrow = new Arrow(_this, _this.selectedDevice);
+        }
     }
 
     /**
@@ -209,7 +215,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var type = $(ui.helper.context).attr('data-device-type');
             var max = $(ui.helper.context).attr('data-device-max');
             var min = $(ui.helper.context).attr('data-device-min');
-            var title = type + ' ' + _this.count;
+            var title = $(ui.helper.context).attr('title') + ' ' + _this.count;
 
             //new Device TODO: What is the max, min value ?
             var device = new Device(_this, _this.count, [relX, relY], type, title, min, max, images[type], update[type]);
@@ -232,6 +238,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: call selectArrow() with arrow, if arrow!=selectedArrow, otherwise with null
         if (_this.selectedArrow !== arrow) {
             selectArrow(arrow);
+            selectDevice(null);
         } else {
             selectArrow(null);
         }
@@ -264,7 +271,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         //
         if (_this.drawArrowMode === true) {
             if (_this.selectedDevice === null) {
-                _this.drawingArrow = new Arrow(diagram, device);
+                _this.drawingArrow = new Arrow(_this, device);
                 selectDevice(device);
             } else if (_this.selectedDevice === device) {
                 _this.drawingArrow.deleteArrow();
@@ -279,7 +286,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         } else {
             selectDevice(device);
         }
-
+        arrowClick(null);
     }
 
     /**
@@ -337,8 +344,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     function deleteSelectedArrow() {
         // TODO diagram: delete selected arrow
         if (_this.selectedArrow !== null) {
-            if (_this.selectedArrow.endDevice !== null) {
-                arrowsCounter.alterCount(-1);
+            if (_this.selectedArrow.endDevice === null) {
+                arrowsCounter.alterCount(1);
             }
             _this.selectedArrow.deleteArrow();
             _this.selectedArrow = null;
@@ -367,4 +374,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     this.deviceMouseDown = deviceMouseDown;
     this.deviceMouseUp = deviceMouseUp;
     this.addDevice = addDevice;
+    this.selectDevice = selectDevice;
+    this.arrowsCounter = arrowsCounter;
 }

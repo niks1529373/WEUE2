@@ -209,7 +209,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var type = $(ui.helper.context).attr('data-device-type');
             var max = $(ui.helper.context).attr('data-device-max');
             var min = $(ui.helper.context).attr('data-device-min');
-            var title = type + ' ' + _this.count;
+            var title = $(ui.helper.context).attr('title') + ' ' + _this.count;
 
             //new Device TODO: What is the max, min value ?
             var device = new Device(_this, _this.count, [relX, relY], type, title, min, max, images[type], update[type]);

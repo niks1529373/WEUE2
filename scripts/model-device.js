@@ -77,13 +77,13 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         object.append('' +
             '<dl class="device-properties">' +
             '   <dt class="accessibility">Maschinentyp</dt>' +
-            '   <dd id="type-machine" class="device-name">' + type + ' ' + _this.index + '</dd>' +
+            '   <dd id="type-machine" class="device-name">' + title + '</dd>' +
 
-            '   <dt class="accessibility">Vorgänger</dt>' +
-            '   <dd class="device-neighbour" classname="predecessor">Vorgänger:</dd>' +
+            '   <dt>Vorgänger:</dt>' +
+            '   <dd class="device-predecessor" classname="predecessor"></dd>' +
 
-            '   <dt class="accessibility">Nachfolger</dt>' +
-            '   <dd class="device-neighbour" name="successor">Nachfolger:</dd>' +
+            '   <dt>Nachfolger:</dt>' +
+            '   <dd class="device-successor" name="successor"></dd>' +
             '</dl>' +
             '<div class="device-image"> ' +
                 imgList.prop("outerHTML") +
@@ -152,8 +152,17 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the list of predecessors in the DOM
      */
     function updatePredecessors() {
-
         // TODO device: update predecessors in overview.html of device like in UE1
+
+        object.find('.device-predecessor').empty();
+        $.each(arrowsIn, function (index, value) {
+            if (index === 0) {
+                object.find('.device-predecessor').append(value.startDevice.title);
+            } else {
+                object.find('.device-predecessor').append(', ' + value.startDevice.title);
+            }
+        });
+
     }
 
     /**
@@ -161,6 +170,15 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     function updateSuccessors() {
         // TODO device: update successors in overview.html of device like in UE1
+
+        object.find('.device-successor').empty();
+        $.each(arrowsOut, function (index, value) {
+            if (index === 0) {
+                object.find('.device-successor').append(value.endDevice.title);
+            } else {
+                object.find('.device-successor').append(', ' + value.endDevice.title);
+            }
+        });
     }
 
     /**

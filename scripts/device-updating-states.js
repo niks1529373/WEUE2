@@ -16,17 +16,14 @@ const update = {
  * @param value The new value to set
  */
 function updateItemGenerator(container, min, max, value) {
-    
-    if(value >= min && value <= max){
-        container.find('.thirdPlane').show();
-        container.find('.secondPlane').show();
-        if(value == 0){
-            container.find('.thirdPlane').hide();
-            container.find('.secondPlane').hide();
-        }else if(value == 1){
-            container.find('.thirdPlane').hide();
-        }
 
+    container.find('.thirdPlane').show();
+    container.find('.secondPlane').show();
+    if(value == 0){
+        container.find('.thirdPlane').hide();
+        container.find('.secondPlane').hide();
+    }else if(value == 1){
+        container.find('.thirdPlane').hide();
     }
 
 }

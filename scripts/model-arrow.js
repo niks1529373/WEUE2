@@ -58,8 +58,6 @@ function Arrow(diagram, startDevice) {
                 ev.stopPropagation();
             }
         });
-
-        // TODO arrow optional: attach events for bonus points for 'TAB' to switch between arrows and to select arrow
     }
 
     /**

@@ -72,7 +72,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         _this.area.droppable({
             drop: function(event, ui) {
                 _this.addDevice(event, ui);
-            }
+            },
+            tolerance: "fit"
         });
 
         // attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode

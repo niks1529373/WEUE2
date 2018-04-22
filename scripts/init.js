@@ -12,6 +12,7 @@ $(document).ready(function() {
 
     // TODO init: add drag functionality to devices in sidebar
     $('.device').draggable({
+        cursor: "move",
     	helper:  function() {
             return $(this).children('.device-image').clone().css('z-index', 1);
     	}

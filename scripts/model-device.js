@@ -131,7 +131,16 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
 
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
+        $("html").keyup(function(ev) {
+            //console.log(ev.which);
+            //console.log(ev.keyCode);
+            //console.log(ev.key);
+            if (ev.key === "Tab") {
 
+            } else if (ev.key === "Enter") {
+
+            }
+        });
     }
 
     /**

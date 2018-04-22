@@ -111,7 +111,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: attach events for context menu items ('Detailseite', 'Löschen')
         $(".contextView").mousedown(function(ev) {
             console.log("Detailseite clicked");
-            alert("Detailseite"); //TODO
+            alert(_this.selectedDevice.title); //TODO
             ev.stopPropagation();
             context.css("display", "none");
         });

@@ -117,9 +117,11 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         object.hover(function() {
             object.append($("#arrow-device-add-reference").clone(false));
             object.find("#arrow-device-add-reference").mousedown(function(ev) {
-                console.log('minipfeil');
-                diagram.selectDevice(null);
-                diagram.activateArrowDrawing();
+                //console.log('minipfeil');
+                if(!diagram.drawArrowMode) {
+                    diagram.selectDevice(null);
+                    diagram.activateArrowDrawing();
+                }
                 //ev.stopPropagation();
             });
         }, function() {

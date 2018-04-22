@@ -238,6 +238,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: call selectArrow() with arrow, if arrow!=selectedArrow, otherwise with null
         if (_this.selectedArrow !== arrow) {
             selectArrow(arrow);
+            selectDevice(null);
         } else {
             selectArrow(null);
         }

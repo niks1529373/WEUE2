@@ -154,6 +154,9 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         // TODO diagram: reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
         _this.drawArrowMode = true;
         arrowButton.addClass("active");
+        if (_this.selectedDevice !== null) {
+            _this.drawingArrow = new Arrow(_this, _this.selectedDevice);
+        }
     }
 
     /**
@@ -367,4 +370,5 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     this.deviceMouseDown = deviceMouseDown;
     this.deviceMouseUp = deviceMouseUp;
     this.addDevice = addDevice;
+    this.selectDevice = selectDevice;
 }

@@ -64,7 +64,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      */
     const object = $(
         // TODO device: create html container
-        '<li class="device"></li>'
+        '<li class="device" tabindex="0"></li>'
     );
 
     // TODO device: add variables if necessary
@@ -118,6 +118,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         // Hover for arrow
         object.hover(function() {
             object.append($("#arrow-device-add-reference").clone(false));
+            object.find("#arrow-device-add-reference").mousedown(function(ev) {
+                console.log('minipfeil');
+                diagram.selectDevice(null);
+                diagram.activateArrowDrawing();
+                //ev.stopPropagation();
+            });
         }, function() {
             object.find("#arrow-device-add-reference").remove();
         });
@@ -131,14 +137,10 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
 
 
         // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
-        $("html").keyup(function(ev) {
-            //console.log(ev.which);
-            //console.log(ev.keyCode);
-            //console.log(ev.key);
-            if (ev.key === "Tab") {
-
-            } else if (ev.key === "Enter") {
-
+        object.keyup(function(ev) {
+            if (ev.key === "Enter") {
+                diagram.deviceMouseDown(_this);
+                diagram.selectDevice(_this);
             }
         });
     }

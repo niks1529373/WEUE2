@@ -155,6 +155,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function activateArrowDrawing() {
         // TODO diagram: reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
+        $(".device").draggable({disabled: true});
         _this.drawArrowMode = true;
         arrowButton.addClass("active");
         if (_this.selectedDevice !== null) {
@@ -167,6 +168,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function deactivateArrowDrawing() {
         // TODO diagram: disable arrow active mode and remove active class to arrow button in sidebar
+        $(".device").draggable({disabled: false});
         _this.drawArrowMode = false;
         if (_this.drawingArrow !== null) {
             _this.drawingArrow.deleteArrow();

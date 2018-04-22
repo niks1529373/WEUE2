@@ -25,7 +25,7 @@ function Arrow(diagram, startDevice) {
      * The jQuery DOM object representing this arrow
      */
     const object = $(
-        // TODO arrow: create jQuery object for the SVG path
+        // create jQuery object for the SVG path
         document.createElementNS('http://www.w3.org/2000/svg', "line")
     );
 
@@ -34,9 +34,7 @@ function Arrow(diagram, startDevice) {
     object.attr("stroke-width", "2");
     object.attr("tabindex", "0");
 
-    // TODO arrow: add variables if necessary
-
-    // TODO arrow: append the arrow DOM object to the arrows svg
+    // append the arrow DOM object to the arrows svg
     $(".arrows > svg").append(object);
 
     // Initialize the event handlers
@@ -46,7 +44,7 @@ function Arrow(diagram, startDevice) {
      * Add the event handlers for the diagram
      */
     function attachEventHandlers() {
-        // TODO arrow: attach events for functionality like in assignment-document described
+        // attach events for functionality like in assignment-document described
         object.mousedown(function(ev) {
             if (_this.endDevice !== null) {
                 diagram.arrowClick(_this);
@@ -85,7 +83,7 @@ function Arrow(diagram, startDevice) {
      * @param {boolean} active
      */
     function setActive(active) {
-        // TODO arrow: set/remove active class of arrow
+        // set/remove active class of arrow
         if (active === true) {
             object.addClass("active");
         } else {
@@ -98,8 +96,7 @@ function Arrow(diagram, startDevice) {
      * @param {number[]} endPosition New end position of the arrow
      */
     function updateEndPosition(endPosition) {
-        // TODO arrow: draw an arrow between the start device and the given end position
-        // HINT You can use Device.getIntersectionCoordinates to calculate the coordinates for the start device
+        // draw an arrow between the start device and the given end position
         var startPosition = startDevice.getIntersectionCoordinates(endPosition);
         object.attr("x1", startPosition[0]);
         object.attr("y1", startPosition[1]);
@@ -111,8 +108,7 @@ function Arrow(diagram, startDevice) {
      * Update the arrow path according to the device positions, or hide the path if no end device is set
      */
     function updateArrow() {
-        // TODO arrow: draw an arrow between the start and end device
-        // HINT You can use Device.getCenterCoordinates and Device.getIntersectionCoordinates
+        // draw an arrow between the start and end device
         if (_this.endDevice !== null) {
             var startCenter = _this.startDevice.getCenterCoordinates();
             var endCenter = _this.endDevice.getCenterCoordinates();
@@ -138,7 +134,7 @@ function Arrow(diagram, startDevice) {
      * Remove this arrow from the DOM and its devices
      */
     function deleteArrow() {
-        // TODO arrow: delete arrow from HTML DOM and from the devices of the endpoints of the arrow
+        // delete arrow from HTML DOM and from the devices of the endpoints of the arrow
         console.log("arrow.deleteArrow() called.");
         _this.startDevice.deleteArrow(_this);
 

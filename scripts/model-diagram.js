@@ -40,7 +40,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     const context = $(".contextMenu");
 
 
-    // TODO diagram: add variables for drawing mode and to store selected devices and arrows
+    // add variables for drawing mode and to store selected devices and arrows
     this.count = 0;
 
     this.selectedDevice = null;
@@ -55,12 +55,12 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Add the event handlers for the diagram
      */
     function attachEventHandlers() {
-        // TODO diagram: prevent standard context menu inside of diagram
+        // prevent standard context menu inside of diagram
         _this.area.contextmenu(function() {
             return false;
         });
 
-        // TODO diagram: attach mouse move event and draw arrow if arrow active mode is on
+        // attach mouse move event and draw arrow if arrow active mode is on
         _this.area.mousemove(function(ev) {
             if (_this.drawArrowMode === true && _this.drawingArrow !== null) {
                 var offset = _this.area.offset();
@@ -68,14 +68,14 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             }
         });
 
-        // TODO diagram: add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
+        // add device drop functionality by jquery ui droppable and prevent dropping outside the diagram
         _this.area.droppable({
             drop: function(event, ui) {
                 _this.addDevice(event, ui);
             }
         });
 
-        // TODO diagram: attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
+        // attach mousedown event to body element and remove all active modes like arrow drawing active mode or selected device mode
         $("body").mousedown(function() {
             context.css("display", "none");
             if (_this.selectedDevice !== null) {
@@ -96,7 +96,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             ev.stopPropagation();
         });
 
-        // TODO diagram: attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
+        // attach keyup event to html element for 'ENTF' ('DEL') (delete device or arrow) and 'a'/'A' (toggle arrow active mode)
         $("html").keyup(function(ev) {
             console.log(ev.which);
             console.log(ev.keyCode);
@@ -109,10 +109,10 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             }
         });
 
-        // TODO diagram: attach events for context menu items ('Detailseite', 'Löschen')
+        // attach events for context menu items ('Detailseite', 'Löschen')
         $(".contextView").mousedown(function(ev) {
             console.log("Detailseite clicked");
-            alert(_this.selectedDevice.title); //TODO
+            alert(_this.selectedDevice.title);
             ev.stopPropagation();
             context.css("display", "none");
         });
@@ -128,7 +128,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Toggle whether drawing arrows is active or not
      */
     function toggleArrowActive() {
-        // TODO diagram: toggle arrow active mode (call deactivateArrowDrawing() or activateArrowDrawing()
         if (_this.drawArrowMode === true) {
             deactivateArrowDrawing();
         } else {
@@ -140,7 +139,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Append the currently drawn arrow to the diagram
      */
     function addArrow() {
-        // TODO diagram: if drawing arrow mode is on, create Arrow object
         if (!_this.drawingArrow.add()) {
             _this.drawingArrow.deleteArrow();
         }
@@ -152,7 +150,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Set arrow drawing to active
      */
     function activateArrowDrawing() {
-        // TODO diagram: reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
+        // reset selected arrows and selected devices, enable arrow active mode and add active class to arrow button in sidebar
         $(".device").draggable({disabled: true});
         _this.drawArrowMode = true;
         arrowButton.addClass("active");
@@ -165,7 +163,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Set arrow drawing to inactive and delete the temporary arrow
      */
     function deactivateArrowDrawing() {
-        // TODO diagram: disable arrow active mode and remove active class to arrow button in sidebar
+        // disable arrow active mode and remove active class to arrow button in sidebar
         $(".device").draggable({disabled: false});
         _this.drawArrowMode = false;
         if (_this.drawingArrow !== null) {
@@ -176,7 +174,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     }
 
     /**
-     * TODO diagram: use this function to get relative coordinates of devices inside diagram
      * Determine the coordinates relative to the diagram area's top left corner
      * @param {number} x The absolute x coordinate
      * @param {number} y The absolute y coordinate
@@ -195,10 +192,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param ui The jQuery UI instance
      */
     function addDevice(event, ui) {
-        // TODO diagram: check if dragged device is inside diagram, if not => do nothing
-
         /**
-         * TODO diagram: if dragged device is inside diagram, add dragged device to diagram
          *                 + get data added to html object in overview
          *                 + add image of device-resources.js
          *                 + add update function of device-updating-states.js
@@ -217,7 +211,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             var min = $(ui.helper.context).attr('data-device-min');
             var title = $(ui.helper.context).attr('title') + ' ' + _this.count;
 
-            //new Device TODO: What is the max, min value ?
             var device = new Device(_this, _this.count, [relX, relY], type, title, min, max, images[type], update[type]);
 
             // add device to Controls
@@ -235,7 +228,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param {Arrow} arrow the arrow instance
      */
     function arrowClick(arrow) {
-        // TODO diagram: call selectArrow() with arrow, if arrow!=selectedArrow, otherwise with null
+        // call selectArrow() with arrow, if arrow!=selectedArrow, otherwise with null
         if (_this.selectedArrow !== arrow) {
             selectArrow(arrow);
             selectDevice(null);
@@ -250,7 +243,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param event The jQuery Event instance
      */
     function showContextMenu(device, event) {
-        // TODO diagram: show context menu + select device + deactivate arrow drawing
+        // show context menu + select device + deactivate arrow drawing
         context.css("display", "block");
         context.css("left", event.pageX + "px");
         context.css("top", event.pageY + "px");
@@ -263,7 +256,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function deviceMouseDown(device) {
         /**
-         * TODO diagram: this method should be called in model-device.js if device a device is clicked
+         * this method should be called in model-device.js if device a device is clicked
          *              + if arrow drawing mode is enabled and no device is selected before, create new object of Arrow for drawingArrow
          *              + if arrow drawing mode is enabled and a device was already selected before, add the drawn arrow between two devices
          *              + if selected device before is equal to new selected device, disable arrow drawing mode and delete drawn arrow from device to mouse position
@@ -294,7 +287,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param {Device} device the device instance
      */
     function deviceMouseUp(device) {
-        // TODO diagram: if drawing arrow mode is enabled and start device != end device, set end device of drawing arrow and add drawing arrow with addArrow()
+        // if drawing arrow mode is enabled and start device != end device, set end device of drawing arrow and add drawing arrow with addArrow()
         if (_this.drawArrowMode === true && _this.selectedDevice !== null && device !== null) {
             if (_this.selectedDevice !== device) {
                 _this.drawingArrow.setEndDevice(device);
@@ -309,7 +302,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param {?Arrow} arrow The arrow to select, or null to unselect
      */
     function selectArrow(arrow) {
-        // TODO diagram: select arrow
         if (_this.selectedArrow !== null) {
             _this.selectedArrow.setActive(false);
             _this.selectedArrow = null;
@@ -326,7 +318,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * @param {?Device} device The device to select, or null to unselect
      */
     function selectDevice(device) {
-        // TODO diagram: select device
         if (_this.selectedDevice !== null) {
             _this.selectedDevice.setActive(false);
             _this.selectedDevice = null;
@@ -342,7 +333,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Remove the selected arrow
      */
     function deleteSelectedArrow() {
-        // TODO diagram: delete selected arrow
         if (_this.selectedArrow !== null) {
             if (_this.selectedArrow.endDevice === null) {
                 arrowsCounter.alterCount(1);
@@ -356,7 +346,6 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      * Completely remove the selected device
      */
     function deleteSelectedDevice() {
-        // TODO diagram: delete selected device
         if (_this.selectedDevice !== null) {
 
             _this.selectedDevice.deleteDevice();

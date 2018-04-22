@@ -25,9 +25,6 @@ function Controls(form) {
      */
     const devices = [];
 
-
-    // TODO controls: add variables if necessary
-
     // Listen for updates
     form.submit(event => {
         event.preventDefault();
@@ -41,7 +38,7 @@ function Controls(form) {
      * Read the current values and update all registered devices
      */
     function updateDevices() {
-        // TODO controls: get values of all controls of the form and call updateDevice on each device
+        // get values of all controls of the form and call updateDevice on each device
 
         values["item-generator"] = parseInt($('#control-item-generator').val());
         values["machine"] = parseInt($('#control-machine').val());
@@ -61,7 +58,7 @@ function Controls(form) {
      * @param {Device} device The device object to add
      */
     function addDevice(device) {
-        // TODO controls: add dropped device to list and update the state of the device
+        // add dropped device to list and update the state of the device
         devices.push(device);
         device.updateDevice(values[device.type]);
 

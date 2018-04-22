@@ -17,7 +17,7 @@ function Counter(element) {
      * @param {number} difference The number by which the counter should be increased/decreased
      */
     function alterCount(difference) {
-        // TODO counter: adapt counter and update counter in overview.html
+        // adapt counter and update counter in overview.html
         count = count + difference;
         updateCount();
     }

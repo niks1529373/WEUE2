@@ -63,11 +63,9 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * The jQuery DOM object representing this device
      */
     const object = $(
-        // TODO device: create html container
+        // create html container
         '<li class="device" tabindex="0"></li>'
     );
-
-    // TODO device: add variables if necessary
 
     (function() {           // wrapped in function to prevent imgList to have global scope
 
@@ -103,12 +101,12 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Add the event handlers for the diagram
      */
     function attachEventHandlers() {
-        // TODO device: attach context menu to device (call showContextMenu() in model-diagram.js if context menu is called)
+        // attach context menu to device (call showContextMenu() in model-diagram.js if context menu is called)
         object.on("contextmenu", function(ev) {
             diagram.showContextMenu(_this, ev);
         });
 
-        // TODO device: attach events for functionality like in assignment-document described
+        // attach events for functionality like in assignment-document described
         object.mousedown(function(ev) {
             diagram.deviceMouseDown(_this);
             $(".contextMenu").css("display", "none");
@@ -128,7 +126,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
             object.find("#arrow-device-add-reference").remove();
         });
 
-        // TODO device: attach drag & drop functionality
+        // attach drag & drop functionality
         object.draggable({ containment: "#diagram",
             drag: function() {
                 moveDevice();
@@ -136,7 +134,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
         });
 
 
-        // TODO device optional: attach events for bonus points for 'Tab' and 'Enter'
+        // attach events for bonus points for 'Tab' and 'Enter'
         object.keyup(function(ev) {
             if (ev.key === "Enter") {
                 diagram.deviceMouseDown(_this);
@@ -150,7 +148,6 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * @param {boolean} active
      */
     function setActive(active) {
-        // TODO device: set/remove active class of device
         if (active === true) {
             object.addClass("active");
         } else {
@@ -163,7 +160,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the list of predecessors in the DOM
      */
     function updatePredecessors() {
-        // TODO device: update predecessors in overview.html of device like in UE1
+        // update predecessors in overview.html of device like in UE1
 
         object.find('.device-predecessor').empty();
         $.each(arrowsIn, function (index, value) {
@@ -180,7 +177,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the list of successors in the DOM
      */
     function updateSuccessors() {
-        // TODO device: update successors in overview.html of device like in UE1
+        // update successors in overview.html of device like in UE1
 
         object.find('.device-successor').empty();
         $.each(arrowsOut, function (index, value) {
@@ -196,7 +193,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * Update the position of all connected arrows
      */
     function moveDevice() {
-        // TODO device: update endpoints of arrows
+        // update endpoints of arrows
         // HINT You can use Arrow.updateArrow()
         var i;
         for (i = 0; i < arrowsIn.length; ++i) {
@@ -252,7 +249,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      *                  - use this number for updating counter in diagram
      */
     function deleteDevice() {
-        // TODO device: delete device from HTML DOM and delete connected arrows
+        // delete device from HTML DOM and delete connected arrows
         let deletedArrows = 0;
 
         console.log("Found " + arrowsIn.length + " ingoing arrows and " + arrowsOut.length + " outgoing arrows.");
@@ -284,7 +281,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
      * @param {Arrow} arrow The arrow to remove
      */
     function deleteArrow(arrow) {
-        // TODO device: delete arrow from arrowsIn/arrowsOut and update predecessors and successors
+        // delete arrow from arrowsIn/arrowsOut and update predecessors and successors
         var i = arrowsIn.indexOf(arrow);
 
         if (i !== -1) {

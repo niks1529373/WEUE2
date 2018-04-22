@@ -203,7 +203,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
          */
 
 
-        if ($(ui.helper).hasClass('device-image')) {      // TODO check if completely inside the diagram      
+        if ($(ui.helper).hasClass('device-image')) {
             _this.count = _this.count + 1;
             var relX = ui.helper.offset().left - _this.area.offset().left;
             var relY = ui.helper.offset().top - _this.area.offset().top;

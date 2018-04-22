@@ -145,6 +145,8 @@ function Arrow(diagram, startDevice) {
             _this.endDevice.deleteArrow(_this);
 
         }
+
+        diagram.arrowsCounter.alterCount(-1)
         object.remove();
     }
 

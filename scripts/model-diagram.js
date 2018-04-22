@@ -344,8 +344,8 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     function deleteSelectedArrow() {
         // TODO diagram: delete selected arrow
         if (_this.selectedArrow !== null) {
-            if (_this.selectedArrow.endDevice !== null) {
-                arrowsCounter.alterCount(-1);
+            if (_this.selectedArrow.endDevice === null) {
+                arrowsCounter.alterCount(1);
             }
             _this.selectedArrow.deleteArrow();
             _this.selectedArrow = null;
@@ -375,4 +375,5 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
     this.deviceMouseUp = deviceMouseUp;
     this.addDevice = addDevice;
     this.selectDevice = selectDevice;
+    this.arrowsCounter = arrowsCounter;
 }

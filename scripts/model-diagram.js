@@ -103,6 +103,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
             console.log(ev.key);
             if (ev.key === "Delete") {
                 deleteSelectedDevice();
+                deleteSelectedArrow();
             } else if (ev.key === "A" || ev.key === "a") {
                 toggleArrowActive();
             }
@@ -140,7 +141,9 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
      */
     function addArrow() {
         // TODO diagram: if drawing arrow mode is on, create Arrow object
+        arrowsCounter.alterCount(1);
         if (!_this.drawingArrow.add()) {
+            arrowsCounter.alterCount(-1);
             _this.drawingArrow.deleteArrow();
         }
 
@@ -282,7 +285,7 @@ function Diagram(areaSelector, arrowButtonSelector, devicesCounter, arrowsCounte
         } else {
             selectDevice(device);
         }
-
+        arrowClick(null);
     }
 
     /**

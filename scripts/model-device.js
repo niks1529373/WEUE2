@@ -130,7 +130,7 @@ function Device(diagram, index, position, type, title, min, max, image, updateFu
 
         // TODO device: attach drag & drop functionality
         object.draggable({ containment: "#diagram",
-            stop: function() {
+            drag: function() {
                 moveDevice();
             }
         });
